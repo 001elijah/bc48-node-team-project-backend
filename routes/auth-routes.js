@@ -1,9 +1,9 @@
-const express = require('express');
-const authControllers = require('../controllers/auth-controller');
-const { authenticate, upload } = require('../middlewares');
-const { schemas } = require('../models/user');
-const { validate } = require('../utils');
-const router = express.Router();
+const express = require('express')
+const authControllers = require('../controllers/auth-controller')
+const { authenticate, upload } = require('../middlewares')
+const { schemas } = require('../models/user')
+const { validate } = require('../utils')
+const router = express.Router()
 
 // router.post('/register', validate.validateBody(schemas.userRegisterSchema), authControllers.register);
 
@@ -17,4 +17,4 @@ const router = express.Router();
 
 // router.patch('/avatars', authenticate, upload.single('avatar'), authControllers.updateAvatar)
 
-module.exports = router;
+module.exports = router
