@@ -5,8 +5,7 @@ const fs = require('fs/promises')
 const path = require('path')
 const jimp = require('jimp')
 const { User, schemas } = require('../models/user')
-const { HttpError } = require('../helpers')
-const { ctrlWrapper } = require('../utils')
+const { HttpError, ctrlWrapper } = require('../helpers')
 const { SECRET_KEY } = process.env
 
 const avatarsDir = path.resolve('public', 'avatars')
