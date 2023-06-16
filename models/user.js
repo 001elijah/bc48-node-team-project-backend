@@ -1,67 +1,68 @@
-// const { Schema, model } = require('mongoose');
-// const Joi = require('joi');
-// const { handleMongooseError } = require('../helpers');
+const Joi = require('joi');
+const { Schema, model } = require('mongoose');
+const { handleMongooseError } = require('../helpers');
 
-// const theme = ["Light", "Dark", "Violet"];
-// const pattern = "r'^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$'";
+const theme = ["Light", "Dark", "Violet"];
+const emailPattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 
-// const userSchema = new Schema({
-//     name: {
-//         type: String,
-//         required: [true, 'Namr is required'],
-//     },
-//     password: {
-//         type: String,
-//         required: [true, 'Set password for user'],
-//     },
-//     email: {
-//         type: String,
-//         required: [true, 'Email is required'],
-//         unique: true,
-//         enum: pattern,
-//     },
-//     theme: {
-//         type: String,
-//         enum: theme,
-//         default: "Light"
-//     },
-//     avatarUrl: {
-//         type: String,
-//         required: true,
-//     },
-//     token: String
 
-// }, {
-//     versionKey: false,
-//     timestamps: true
-// });
+const userSchema = new Schema({
+    userName: {
+        type: String,
+        required: true,
+    },
+    password: {
+        type: String,
+        required: true,
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+    },
+    theme: {
+        type: String,
+        enum: theme,
+        default: "Light"
+    },
+    // avatarUrl: {
+    //     type: String,
+    //     required: true,
+    // },
+    token: String
 
-// userSchema.post("save", handleMongooseError);
+}, {
+    versionKey: false,
+    timestamps: true
+});
 
-// const userRegisterSchema = Joi.object({
-//     name: Joi.string().min(2).max(32).required(),
-//     email: Joi.string().min(8).max(64).required(),
-//     password: Joi.string().required(),
-// });
+userSchema.post("save", handleMongooseError);
 
-// const userLoginSchema = Joi.object({
-//     email: Joi.string().required(),
-//     password: Joi.string().required(),
-// });
+const userRegisterSchema = Joi.object({
+    userName: Joi.string().min(2).max(32).required(),
+    email: Joi.string().min(8).max(64).pattern(emailPattern).required(),
+    password: Joi.string().min(8).pattern(/^\S+$/).required(),
+});
 
-// const updateTheme = Joi.object({
-//     theme: Joi.string().valid(...theme).required(),
-// })
 
-// const schemas = {
-//     userRegisterSchema,
-//     userLoginSchema,
-//     updateTheme,
-// };
+const userLoginSchema = Joi.object({
+    email: Joi.string().required(),
+    password: Joi.string().required(),
+});
 
-// const User = model("user", userSchema);
+const updateTheme = Joi.object({
+    theme: Joi.string().valid(...theme).required(),
+});
 
-// module.exports = {
-//     User,
-//     schemas,
-// };
+const schemas = {
+    userRegisterSchema,
+    userLoginSchema,
+    updateTheme,
+};
+
+const User = model("user", userSchema);
+
+module.exports = {
+    User,
+    schemas,
+};
