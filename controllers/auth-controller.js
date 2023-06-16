@@ -13,7 +13,7 @@ const register = async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
     if (user) {
-        throw HttpError(409,"Email in use");
+        throw HttpError(409, 'Email in use')
     }
 
     //const defaultImage = gravatar.url(email);
@@ -38,15 +38,15 @@ const register = async (req, res) => {
 };
 
 const login = async (req, res) => {
-    const { email, password } = req.body;
-    const user = await User.findOne({ email });
+    const { email, password } = req.body
+    const user = await User.findOne({ email })
     if (!user) {
-        throw HttpError(401, "Email or password is wrong");
+        throw HttpError(401, 'Email or password is wrong')
     }
 
-    const passwordCompare = await bcrypt.compare(password, user.password);
+    const passwordCompare = await bcrypt.compare(password, user.password)
     if (!passwordCompare) {
-        throw HttpError(401, "Email or password is wrong");
+        throw HttpError(401, 'Email or password is wrong')
     }
 
     const payload = {
@@ -62,10 +62,10 @@ const login = async (req, res) => {
             userName: user.userName,
             email: user.email,
             theme: user.theme,
-            avatarUrl: user.avatarUrl
+            avatarUrl: user.avatarUrl,
         },
-    });
-};
+    })
+}
 
 // const logout = async (req, res) => {
 //     const { _id: id } = req.user;
@@ -116,20 +116,20 @@ const login = async (req, res) => {
 //     const avatar = await jimp.read(tempPath);
 //     await avatar.resize(250, 250).write(resultDir);
 
-//     fs.rename(tempPath, resultDir);
-//     const avatarUrl = path.join('avatars', originalname);
-//     await User.findByIdAndUpdate(_id, { avatarUrl });
+    fs.rename(tempPath, resultDir);
+    const avatarUrl = path.join('avatars', originalname);
+    await User.findByIdAndUpdate(_id, { avatarUrl });
 
-//     res.json({
-//         avatarUrl,
-//     })
-// };
+    res.json({
+        avatarUrl,
+    })
+};
 
 module.exports = {
     register: ctrlWrapper(register),
     login: ctrlWrapper(login),
-    // logout: ctrlWrapper(logout),
-    // getCurrent: ctrlWrapper(getCurrent),
-    // subscription: ctrlWrapper(subscription),
-    // updateAvatar: ctrlWrapper(updateAvatar),
+    logout: ctrlWrapper(logout),
+    getCurrent: ctrlWrapper(getCurrent),
+    subscription: ctrlWrapper(subscription),
+    updateAvatar: ctrlWrapper(updateAvatar),
 };

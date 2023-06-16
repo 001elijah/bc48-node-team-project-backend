@@ -17,4 +17,4 @@ router.post('/login', validate.validateBody(schemas.userLoginSchema), authContro
 
 // router.patch('/avatars', authenticate, upload.single('avatar'), authControllers.updateAvatar)
 
-module.exports = router;
+module.exports = router
