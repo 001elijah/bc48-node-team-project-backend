@@ -5,27 +5,27 @@ const jwt = require('jsonwebtoken');
 // const path = require('path');
 // const jimp = require('jimp');
 const { User, schemas } = require('../models/user');
-const { HttpError } = require('../helpers');
-const { ctrlWrapper } = require('../utils');
+const { HttpError, ctrlWrapper } = require('../helpers');
 const { SECRET_KEY } = process.env;
+const {uploadToCloudinary} = require('../middlewares')
 
 const register = async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
+
     if (user) {
-        throw HttpError(409, 'Email in use')
+        throw HttpError(409,"Email in use");
     }
 
-    //const defaultImage = gravatar.url(email);
     const hashPassword = await bcrypt.hash(password, 10);
     const result = await User.create({ ...req.body, password: hashPassword });
 
     const payload = {
         id: result._id,
     }
+
     const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "7h" });
     await User.findByIdAndUpdate(result._id, { token });
-
 
     res.status(201).json({
         token,
@@ -33,20 +33,23 @@ const register = async (req, res) => {
             userName: result.userName,
             email: result.email,
             theme: result.theme,
+            avatarUrl: result.avatarUrl,
         }
     });
 };
 
 const login = async (req, res) => {
-    const { email, password } = req.body
-    const user = await User.findOne({ email })
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
+
     if (!user) {
-        throw HttpError(401, 'Email or password is wrong')
+        throw HttpError(401, "Email or password is wrong");
     }
 
-    const passwordCompare = await bcrypt.compare(password, user.password)
+    const passwordCompare = await bcrypt.compare(password, user.password);
+
     if (!passwordCompare) {
-        throw HttpError(401, 'Email or password is wrong')
+        throw HttpError(401, "Email or password is wrong");
     }
 
     const payload = {
@@ -62,10 +65,77 @@ const login = async (req, res) => {
             userName: user.userName,
             email: user.email,
             theme: user.theme,
-            avatarUrl: user.avatarUrl,
+            avatarUrl: user.avatarUrl
         },
-    })
-}
+    });
+};
+
+const getCurrent = async (req, res) => {
+    const { userName, email, theme, avatarUrl } = req.user;
+
+    res.json({
+        userName,
+        email,
+        theme,
+        avatarUrl,
+    });
+};
+
+const logout = async (req, res) => {
+    const { _id: id } = req.user;
+    await User.findByIdAndUpdate(id, { token: "" });
+
+    res.status(204).json()
+};
+
+const theme = async (req, res, next) => {
+    const { _id: id } = req.user;
+
+    const update = await User.findByIdAndUpdate(id, { ...req.body }, { new: true });
+
+    if (update.modifiedCount === 0) {
+        return next(HttpError(404));
+    }
+
+    const user = await User.findById(id);
+    res.json({
+        user: {
+            email: user.email,
+            theme: user.theme,
+        }
+    });
+};
+
+const updateUser = async (req, res, next) => {
+    const { _id: id } = req.user;
+    let user = await User.findById(id);
+    let cloudinaryUrl = res.locals.avatarUrl ?? user.avatarUrl;
+    console.log(cloudinaryUrl);
+
+    const update = await User.findByIdAndUpdate(
+        id,
+        { ...req.body, avatarUrl: cloudinaryUrl },
+        { new: true }
+    );
+
+    if (update === null) {
+        next(HttpError(404, 'Failed to update user'));
+    }
+
+    user = await User.findById(id);
+
+  res.json({
+    user: {
+      userName: user.userName,
+      email: user.email,
+      theme: user.theme,
+      avatarUrl: user.avatarUrl,
+    },
+  });
+};
+
+
+
 
 // const logout = async (req, res) => {
 //     const { _id: id } = req.user;
@@ -116,20 +186,24 @@ const login = async (req, res) => {
 //     const avatar = await jimp.read(tempPath);
 //     await avatar.resize(250, 250).write(resultDir);
 
-    fs.rename(tempPath, resultDir);
-    const avatarUrl = path.join('avatars', originalname);
-    await User.findByIdAndUpdate(_id, { avatarUrl });
+//     fs.rename(tempPath, resultDir);
+//     const avatarUrl = path.join('avatars', originalname);
+//     await User.findByIdAndUpdate(_id, { avatarUrl });
 
-    res.json({
-        avatarUrl,
-    })
-};
+//     res.json({
+//         avatarUrl,
+//     })
+// };
 
 module.exports = {
     register: ctrlWrapper(register),
     login: ctrlWrapper(login),
-    logout: ctrlWrapper(logout),
     getCurrent: ctrlWrapper(getCurrent),
-    subscription: ctrlWrapper(subscription),
-    updateAvatar: ctrlWrapper(updateAvatar),
+    logout: ctrlWrapper(logout),
+    theme: ctrlWrapper(theme),
+    updateUser:ctrlWrapper(updateUser)
+
+
+    // subscription: ctrlWrapper(subscription),
+    // updateAvatar: ctrlWrapper(updateAvatar),
 };

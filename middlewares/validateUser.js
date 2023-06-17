@@ -1,8 +1,9 @@
 const { HttpError } = require('../helpers');
 
-const validateBody = (schema) => {
+const validateUser = (schema) => {
     const func = (req, res, next) => {
-        if (Object.keys(req.body).length === 0) {
+       
+        if (Object.keys(req.body).length === 0 && res.locals.avatarUrl == null) {
             next(HttpError(400, `Missing required fields`));
         }
 
@@ -28,7 +29,20 @@ const validateBody = (schema) => {
     return func;
 };
 
-
+const validateTheme = schema => {
+    const func = (req, res, next) => {
+        if (Object.keys(req.body).length === 0) {
+            next(HttpError(400, `Missing field theme`));
+        }
+        const { error } = schema.validate(req.body);
+        if (error) {
+            next(HttpError(400, "Invalid theme value"));
+        } else {
+            next();
+        }
+    };
+    return func;
+};
 
 // const validateFavBody = schema => {
 //     const func = (req, res, next) => {
@@ -41,19 +55,10 @@ const validateBody = (schema) => {
 //     return func;
 // };
 
-// const validateSubscription = schema => {
-//     const func = (req, res, next) => {
-//         if (Object.keys(req.body).length === 0) {
-//             next(HttpError(400, `Missing field subscription`));
-//         } else {
-//             next();
-//         }
-//     };
-//     return func;
-// };
 
 const validate = {
-    validateBody,
+    validateUser,
+    validateTheme,
     //validateFavBody,
     //validateSubscription
 };

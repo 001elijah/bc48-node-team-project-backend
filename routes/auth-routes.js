@@ -1,20 +1,23 @@
 const express = require('express');
 const authControllers = require('../controllers/auth-controller');
-//const { authenticate, upload } = require('../middlewares');
+const { authenticate, validate, uploadToCloudinary } = require('../middlewares');
 const { schemas } = require('../models/user');
-const { validate } = require('../utils');
+
+
 const router = express.Router();
 
-router.post('/register', validate.validateBody(schemas.userRegisterSchema), authControllers.register);
+router.post('/register', validate.validateUser(schemas.userRegisterSchema), authControllers.register);
 
-router.post('/login', validate.validateBody(schemas.userLoginSchema), authControllers.login);
+router.post('/login', validate.validateUser(schemas.userLoginSchema), authControllers.login);
 
-// router.post('/logout', authenticate, authControllers.logout);
+router.get('/current', authenticate, authControllers.getCurrent);
 
-// router.get('/current', authenticate, authControllers.getCurrent);
+router.post('/logout', authenticate, authControllers.logout);
 
-// router.patch('/', authenticate, validate.validateSubscription(schemas.updateSubscription), authControllers.subscription);
+router.patch('/', authenticate, validate.validateTheme(schemas.updateTheme), authControllers.theme);
 
-// router.patch('/avatars', authenticate, upload.single('avatar'), authControllers.updateAvatar)
+//router.patch('/updateUser', authenticate, validate.validateUser(schemas.updateUser), authControllers.updateUser)
 
-module.exports = router
+router.patch('/updateUser', authenticate, uploadToCloudinary, validate.validateUser(schemas.updateUser), authControllers.updateUser);
+
+module.exports = router;

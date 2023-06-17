@@ -2,9 +2,8 @@ const Joi = require('joi');
 const { Schema, model } = require('mongoose');
 const { handleMongooseError } = require('../helpers');
 
-const theme = ["Light", "Dark", "Violet"];
+const theme = ["light", "dark", "violet"];
 const emailPattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
-
 
 const userSchema = new Schema({
     userName: {
@@ -23,12 +22,12 @@ const userSchema = new Schema({
     theme: {
         type: String,
         enum: theme,
-        default: "Light"
+        default: "light",
     },
-    // avatarUrl: {
-    //     type: String,
-    //     required: true,
-    // },
+    avatarUrl: {
+        type: String,
+        default: null,
+    },
     token: String
 
 }, {
@@ -54,10 +53,17 @@ const updateTheme = Joi.object({
     theme: Joi.string().valid(...theme).required(),
 });
 
+const updateUser = Joi.object({
+    userName: Joi.string().min(2).max(32),
+    email: Joi.string().min(8).max(64).pattern(emailPattern),
+    password: Joi.string().min(8).pattern(/^\S+$/),
+});
+
 const schemas = {
     userRegisterSchema,
     userLoginSchema,
     updateTheme,
+    updateUser,
 };
 
 const User = model("user", userSchema);
