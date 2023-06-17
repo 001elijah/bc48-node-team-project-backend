@@ -1,8 +1,8 @@
 const express = require('express')
 const logger = require('morgan')
 const cors = require('cors')
-const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./swagger.json');
+const swaggerUi = require('swagger-ui-express')
+const swaggerDocument = require('./swagger.json')
 require('dotenv').config()
 
 const authRouter = require('./routes/auth-routes')
@@ -15,7 +15,7 @@ app.use(logger(formatsLogger))
 app.use(cors())
 app.use(express.json())
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
 app.use('/auth', authRouter)
 
@@ -24,8 +24,8 @@ app.use((req, res) => {
 })
 
 app.use((err, req, res, next) => {
-  const { status = 500, message = "Server Error" } = err;
-  res.status(status).json({ message })
+    const { status = 500, message = 'Server Error' } = err
+    res.status(status).json({ message })
 })
 
-module.exports = app;
+module.exports = app
