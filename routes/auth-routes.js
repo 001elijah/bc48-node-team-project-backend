@@ -25,7 +25,7 @@ router.patch(
     '/',
     authenticate,
     validate.validateTheme(schemas.updateTheme),
-    authControllers.theme
+    authControllers.updateUserTheme
 )
 
 router.patch(

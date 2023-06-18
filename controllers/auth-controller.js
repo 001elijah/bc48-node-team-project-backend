@@ -83,7 +83,7 @@ const logout = async (req, res) => {
     res.status(204).json()
 }
 
-const theme = async (req, res, next) => {
+const updateUserTheme = async (req, res, next) => {
     const { _id: id } = req.user
 
     const update = await User.findByIdAndUpdate(
@@ -107,11 +107,21 @@ const theme = async (req, res, next) => {
 
 const updateUser = async (req, res, next) => {
     const { _id: id } = req.user
-    const { password } = req.body
-    let user = await User.findById(id)
-    let cloudinaryUrl = res.locals.avatarUrl ?? user.avatarUrl
-    let hashPassword = user.password
+    const { password, email } = req.body
+    let user = await User.findOne({ email })
 
+    if (user) {
+        if (email === user.email) {
+            if (id != user.id) {
+                throw HttpError(409, 'Email in use')
+            }
+        }
+    }
+    let cloudinaryUrl = res.locals.avatarUrl ?? user.avatarUrl
+
+    user = await User.findById(id)
+
+    let hashPassword = user.password
     if (password) {
         hashPassword = await bcrypt.hash(password, 10)
     }
@@ -143,6 +153,6 @@ module.exports = {
     login: ctrlWrapper(login),
     getCurrent: ctrlWrapper(getCurrent),
     logout: ctrlWrapper(logout),
-    theme: ctrlWrapper(theme),
+    updateUserTheme: ctrlWrapper(updateUserTheme),
     updateUser: ctrlWrapper(updateUser),
 }

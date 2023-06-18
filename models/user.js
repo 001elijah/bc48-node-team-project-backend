@@ -2,7 +2,7 @@ const Joi = require('joi')
 const { Schema, model } = require('mongoose')
 const { handleMongooseError } = require('../helpers')
 
-const theme = ['light', 'dark', 'violet']
+const theme = ['light', 'dark', 'colorful']
 const emailPattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/
 
 const userSchema = new Schema(
