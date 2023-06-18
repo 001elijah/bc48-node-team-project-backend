@@ -386,6 +386,77 @@
                     }
                 }
             }
+        },
+        "/user/sendEmail": {
+            "post": {
+                "tags": ["user"],
+                "summary": "Need Help Mail",
+                "description": "Sending Email that user need help",
+                "operationId": "sendEmail",
+                "requestBody": {
+                    "required": true,
+                    "description": "Pass email and comment from form",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserSendEmail"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "(OK) Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/EmailSent"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "(Unauthorized) Incorrect data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User400mail"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "(Unauthorized) Incorrect credentials",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User401noAuth"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "(Not Found)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User404"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "(Server Error)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User500"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -526,6 +597,28 @@
                     }
                 }
             },
+            "UserSendEmail": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "example": "fakestemailever@fake.com"
+                    },
+                    "comment": {
+                        "type": "string",
+                        "example": "Hello. I need your HELP!"
+                    }
+                }
+            },
+            "EmailSent": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Email sent"
+                    }
+                }
+            },
             "User400": {
                 "type": "object",
                 "properties": {
@@ -541,6 +634,15 @@
                     "message": {
                         "type": "string",
                         "example": "Invalid theme value"
+                    }
+                }
+            },
+            "User400mail": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Incorrect email format..."
                     }
                 }
             },
