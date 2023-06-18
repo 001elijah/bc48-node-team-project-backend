@@ -36,4 +36,11 @@ router.patch(
     authControllers.updateUser
 )
 
+router.post(
+    '/sendEmail',
+    authenticate,
+    validate.validateUser(schemas.userSendEmail),
+    authControllers.sendEmail
+)
+
 module.exports = router

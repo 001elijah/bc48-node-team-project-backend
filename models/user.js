@@ -62,11 +62,17 @@ const updateUser = Joi.object({
     password: Joi.string().min(8).pattern(/^\S+$/),
 })
 
+const userSendEmail = Joi.object({
+    email: Joi.string().min(8).max(64).pattern(emailPattern).required(),
+    comment: Joi.string().min(2).required(),
+})
+
 const schemas = {
     userRegisterSchema,
     userLoginSchema,
     updateTheme,
     updateUser,
+    userSendEmail,
 }
 
 const User = model('user', userSchema)

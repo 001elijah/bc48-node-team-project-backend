@@ -1,8 +1,12 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const { User } = require('../models/user')
+const sgMail = require('@sendgrid/mail')
 const { HttpError, ctrlWrapper } = require('../helpers')
-const { SECRET_KEY } = process.env
+const { SECRET_KEY, SENDGRID_API_KEY, SENDGRID_FROM, SENDGRID_TO } = process.env
+
+require('dotenv').config()
+sgMail.setApiKey(SENDGRID_API_KEY)
 
 const register = async (req, res) => {
     const { email, password } = req.body
@@ -148,6 +152,22 @@ const updateUser = async (req, res, next) => {
     })
 }
 
+const sendEmail = async (req, res) => {
+    const { email, comment } = req.body
+    const message = {
+        to: SENDGRID_TO,
+        from: SENDGRID_FROM,
+        subject: 'Need Help',
+        text: `Email: ${email}\nComment: ${comment}`,
+    }
+
+    await sgMail.send(message)
+
+    res.status(200).json({
+        message: 'Email sent',
+    })
+}
+
 module.exports = {
     register: ctrlWrapper(register),
     login: ctrlWrapper(login),
@@ -155,4 +175,5 @@ module.exports = {
     logout: ctrlWrapper(logout),
     updateUserTheme: ctrlWrapper(updateUserTheme),
     updateUser: ctrlWrapper(updateUser),
+    sendEmail: ctrlWrapper(sendEmail),
 }
