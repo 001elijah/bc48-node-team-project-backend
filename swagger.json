@@ -1,50 +1,594 @@
 {
-  "openapi": "3.0.2",
-  "info": {
-    "title": "JSONPlaceholder",
-    "description": "Fake Online REST API for Testing and Prototyping",
-    "version": "0.0.1"
-  },
-  "paths": {
-    "/posts": {
-      "get": {
-        "description": "List all posts",
-        "responses": {
-          "200": {
-            "description": "Successfully fetched all posts from JSONPlaceholder",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "userId": {
-                        "type": "number"
-                      },
-                      "id": {
-                        "type": "number"
-                      },
-                      "title": {
-                        "type": "string"
-                      },
-                      "body": {
-                        "type": "string"
-                      }
-                    },
-                    "example": {
-                      "userId": 1,
-                      "id": 1,
-                      "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
-                      "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
-                    }
-                  }
-                }
-              }
-            }
-          }
+    "openapi": "3.0.2",
+    "info": {
+        "title": "Task Pro API 1.0.",
+        "description": "Introducing Task Pro API, the ultimate task management application designed to empower users in creating and managing boards with their tasks seamlessly. Whether you're a professional managing complex projects or an individual looking to stay organized, Task Pro is your go-to solution for efficient task tracking and collaboration.\n\nSome useful links:\n- [Task Pro API repository](https://github.com/001elijah/bc48-node-team-project-backend)",
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.01"
+    },
+    "servers": [
+        {
+            "url": "https://taskpro.onrender.com/api-docs/"
         }
-      }
+    ],
+    "tags": [
+        {
+            "name": "user",
+            "description": "Operations about user"
+        }
+    ],
+    "paths": {
+        "/user/register": {
+            "post": {
+                "tags": ["user"],
+                "summary": "Register new user",
+                "description": "Register new user in our system",
+                "requestBody": {
+                    "required": true,
+                    "description": "Created token and user object",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserRegister"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "(OK) Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "(Bad Request) Invalid data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User400"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "(Not Found)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User404"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "(Conflict) If user already exists with this email",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User409"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "(Server Error)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User500"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user/login": {
+            "post": {
+                "tags": ["user"],
+                "summary": "Login user",
+                "description": "Login new user in our system",
+                "requestBody": {
+                    "required": true,
+                    "description": "Created token and user object",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserLogin"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "(OK) Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "(Unauthorized) Incorrect credentials",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User401"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "(Not Found)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User404"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "(Server Error)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User500"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user/logout": {
+            "post": {
+                "tags": ["user"],
+                "summary": "Logout current user",
+                "description": "Logs out current logged in user session",
+                "operationId": "logoutUser",
+                "parameters": [],
+                "responses": {
+                    "204": {
+                        "description": "(No Content) Successful operation"
+                    },
+                    "401": {
+                        "description": "(Unauthorized) Incorrect token",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User401noAuth"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "(Not Found)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User404"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "(Server Error)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User500"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user/current": {
+            "get": {
+                "tags": ["user"],
+                "summary": "Get current user",
+                "description": "Get current user in the system",
+                "operationId": "getCurrent",
+                "responses": {
+                    "200": {
+                        "description": "(OK) Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserCurrent"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "(Unauthorized) Incorrect credentials",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User401"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "(Not Found)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User404"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "(Server Error)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User500"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user/": {
+            "patch": {
+                "tags": ["user"],
+                "summary": "Change theme",
+                "description": "Change theme for the user in system",
+                "operationId": "changeTheme",
+                "requestBody": {
+                    "required": true,
+                    "description": "Pass theme value",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserThemeReq"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "(OK) Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserTheme"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "(Unauthorized) Incorrect data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User400theme"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "(Unauthorized) Incorrect credentials",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User401noAuth"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "(Not Found)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User404"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "(Server Error)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User500"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user/updateUserInfo": {
+            "patch": {
+                "tags": ["user"],
+                "summary": "Update user info",
+                "description": "Updata user info in the system",
+                "operationId": "updateUser",
+                "requestBody": {
+                    "required": true,
+                    "description": "Pass update values",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserUpdateReq"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "(OK) Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserUpdate"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "(Unauthorized) Incorrect data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "(Unauthorized) Incorrect credentials",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User401noAuth"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "(Not Found)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User404"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "(Server Error)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User500"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "User": {
+                "type": "object",
+                "properties": {
+                    "token": {
+                        "type": "string"
+                    },
+                    "user": {
+                        "type": "object",
+                        "properties": {
+                            "userName": {
+                                "type": "string",
+                                "example": "John"
+                            },
+                            "email": {
+                                "type": "string",
+                                "example": "john@email.com"
+                            },
+                            "theme": {
+                                "type": "string",
+                                "example": "dark"
+                            },
+                            "avatarUrl": {
+                                "type": "string",
+                                "example": null
+                            }
+                        }
+                    }
+                }
+            },
+            "UserCurrent": {
+                "type": "object",
+                "properties": {
+                    "userName": {
+                        "type": "string",
+                        "example": "John"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "john@email.com"
+                    },
+                    "theme": {
+                        "type": "string",
+                        "example": "dark"
+                    },
+                    "avatarUrl": {
+                        "type": "string",
+                        "example": null
+                    }
+                }
+            },
+            "UserRegister": {
+                "type": "object",
+                "properties": {
+                    "userName": {
+                        "type": "string",
+                        "example": "John"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "john@email.com"
+                    },
+                    "password": {
+                        "type": "string",
+                        "example": "example12345"
+                    }
+                }
+            },
+            "UserLogin": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "example": "john@email.com"
+                    },
+                    "password": {
+                        "type": "string",
+                        "example": "example12345"
+                    }
+                }
+            },
+            "UserTheme": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "example": "john@email.com"
+                    },
+                    "theme": {
+                        "type": "string",
+                        "example": "dark"
+                    }
+                }
+            },
+            "UserThemeReq": {
+                "type": "object",
+                "properties": {
+                    "theme": {
+                        "type": "string",
+                        "example": "dark"
+                    }
+                }
+            },
+            "UserUpdate": {
+                "type": "object",
+                "properties": {
+                    "userName": {
+                        "type": "string",
+                        "example": "Dude"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "fakestemailever@fake.com"
+                    },
+                    "theme": {
+                        "type": "string",
+                        "example": "dark"
+                    },
+                    "avatarUrl": {
+                        "type": "string",
+                        "example": "https://res.cloudinary.com/dblzpxfzb/image/upload/v1687076583/uploads/t9ml2bpnat7offmhza7r.jpg"
+                    }
+                }
+            },
+            "UserUpdateReq": {
+                "type": "object",
+                "properties": {
+                    "userName": {
+                        "type": "string",
+                        "example": "Dude"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "fakestemailever@fake.com"
+                    }
+                }
+            },
+            "User400": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Password must be min 8 characters and does not contain white spaces"
+                    }
+                }
+            },
+            "User400theme": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Invalid theme value"
+                    }
+                }
+            },
+            "User401": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Email or password is wrong"
+                    }
+                }
+            },
+            "User404": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Not Found"
+                    }
+                }
+            },
+            "User409": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Email in use"
+                    }
+                }
+            },
+            "User500": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Server Error"
+                    }
+                }
+            },
+            "User401noAuth": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Not authorized"
+                    }
+                }
+            }
+        }
     }
-  }
 }
