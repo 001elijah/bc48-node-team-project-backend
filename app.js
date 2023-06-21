@@ -6,6 +6,8 @@ const swaggerDocument = require('./swagger.json')
 require('dotenv').config()
 
 const authRouter = require('./routes/auth-routes')
+const boardRouter = require('./routes/board-routes')
+const cardRouter = require('./routes/card-routers')
 
 const app = express()
 
@@ -19,6 +21,8 @@ app.use(express.urlencoded({ extended: false }))
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
 app.use('/user', authRouter)
+app.use('/board', boardRouter)
+app.use('/card', cardRouter)
 
 app.use((req, res) => {
     res.status(404).json({ message: 'Not found' })
