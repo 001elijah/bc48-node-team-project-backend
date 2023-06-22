@@ -46,6 +46,7 @@ cardSchema.post('save', handleMongooseError)
 const cardAddSchema = Joi.object({
     title: Joi.string().required(),
     description: Joi.string().required(),
+    label: Joi.string().valid('without', 'low', 'medium', 'high').default('without'),
     deadline: Joi.date().required().format('YYYY-MM-DD HH:mm'),
     boardId: Joi.string().required(),
     columnId: Joi.string().required(),
@@ -54,6 +55,7 @@ const cardAddSchema = Joi.object({
 const cardUpdateSchema = Joi.object({
     title: Joi.string(),
     description: Joi.string(),
+    label: Joi.string().valid('without', 'low', 'medium', 'high').default('without'),
     deadline: Joi.date().format('YYYY-MM-DD HH:mm'),
 })
 
