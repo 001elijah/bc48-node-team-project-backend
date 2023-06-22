@@ -3,8 +3,8 @@ const router = express.Router()
 
 const { authenticate, isValidId, detectScreenSize } = require('../middlewares')
 const boardController = require('../controllers/board-controller')
-const { validateBodyBoard } = require('../utils')
-const schema = require('../schema/boardSchema')
+const { validateBodyBoard } = require('../middlewares')
+const { schemas } = require('../models/board')
 
 
 router.use(authenticate)
@@ -13,13 +13,13 @@ router.get('/', boardController.getBoardAll)
 
 router.post(
     '/',
-    validateBodyBoard(schema.boardAddAndUpdateSchema),
+    validateBodyBoard(schemas.boardAddSchema),
     boardController.addBoard
 )
 
-router.put(
+router.patch(
     '/:boardId',
-    validateBodyBoard(schema.boardAddAndUpdateSchema),
+    validateBodyBoard(schemas.boardUpdateSchema),
     isValidId,
     boardController.updateBoardById
 )
@@ -27,27 +27,27 @@ router.put(
 router.delete('/:boardId', isValidId, boardController.deleteBoardById)
 
 router.post(
-    '/colum',
-    validateBodyBoard(schema.columAddAndUpdateSchema),
-    boardController.addColum
+    '/column',
+    validateBodyBoard(schemas.columnAddAndUpdateSchema),
+    boardController.addColumn
 )
 
 router.get(
-    '/colum',
-    validateBodyBoard(schema.columGetAllAndDeleteSchema),
-    boardController.getColum
+    '/column',
+    validateBodyBoard(schemas.columnGetAllAndDeleteSchema),
+    boardController.getColumn
 )
 
-router.put(
-    '/colum/:columId',
-    validateBodyBoard(schema.columAddAndUpdateSchema),
-    boardController.updateColum
+router.patch(
+    '/column/:columnId',
+    validateBodyBoard(schemas.columnAddAndUpdateSchema),
+    boardController.updateColumn
 )
 
 router.delete(
-    '/colum/:columId',
-    validateBodyBoard(schema.columGetAllAndDeleteSchema),
-    boardController.deleteColumById
+    '/column/:columnId',
+    validateBodyBoard(schemas.columnGetAllAndDeleteSchema),
+    boardController.deleteColumnById
 )
 
 router.get('/backgrounds', detectScreenSize, boardController.getBackground);
