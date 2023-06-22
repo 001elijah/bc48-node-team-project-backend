@@ -31,4 +31,4 @@ function getScreenSize(userAgent) {
     }
 }
 
-module.exports = { detectScreenSize }
+module.exports = {detectScreenSize}

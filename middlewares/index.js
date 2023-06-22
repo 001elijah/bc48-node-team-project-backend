@@ -4,7 +4,7 @@ const { uploadToCloudinary, getImages } = require('./cloudinaryUpload')
 const isValidId = require('./isValidId')
 const validateBodyBoard = require('./validateBodyBoard')
 // const upload = require('./upload');
-const { detectScreenSize } = require('./detectScreenSIze')
+const {detectScreenSize} = require('./detectScreenSize')
 
 module.exports = {
     isValidId,
