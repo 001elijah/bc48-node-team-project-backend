@@ -1,10 +1,11 @@
 const express = require('express')
 const router = express.Router()
 
-const { authenticate, isValidId } = require('../middlewares')
+const { authenticate, isValidId, detectScreenSize } = require('../middlewares')
 const boardController = require('../controllers/board-controller')
 const { validateBodyBoard } = require('../utils')
 const schema = require('../schema/boardSchema')
+
 
 router.use(authenticate)
 
@@ -48,5 +49,7 @@ router.delete(
     validateBodyBoard(schema.columGetAllAndDeleteSchema),
     boardController.deleteColumById
 )
+
+router.get('/backgrounds', detectScreenSize, boardController.getBackground);
 
 module.exports = router
