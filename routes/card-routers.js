@@ -2,25 +2,37 @@ const express = require('express')
 const router = express.Router()
 
 const cardController = require('../controllers/card-controller')
-const { validateBodyBoard } = require('../utils')
-const schema = require('../schema/cardSchema')
+const { validateBodyBoard } = require('../middlewares')
+const { schemas } = require('../models/card')
 const { authenticate, isValidId } = require('../middlewares')
 
 router.use(authenticate)
 
 router.post(
     '/',
-    validateBodyBoard(schema.cardAddSchema),
+    validateBodyBoard(schemas.cardAddSchema),
     cardController.addCard
 )
 
 router.get(
     '/',
-    validateBodyBoard(schema.cardGetAllSchema),
-    cardController.getCardsByColum
+    validateBodyBoard(schemas.cardGetAllSchema),
+    cardController.getCardsByColumn
 )
 
-router.put('/:cardId', isValidId, cardController.updateCardById)
+router.patch(
+    '/:cardId',
+    validateBodyBoard(schemas.cardUpdateSchema),
+    isValidId,
+    cardController.updateCardById
+)
+
+router.patch(
+    '/column/:cardId',
+    validateBodyBoard(schemas.cardUpdateColumnSchema),
+    isValidId,
+    cardController.updateCardColumn
+)
 
 router.delete('/:cardId', isValidId, cardController.deleteCardById)
 
