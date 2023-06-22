@@ -54,7 +54,7 @@ const cardAddSchema = Joi.object({
 const cardUpdateSchema = Joi.object({
     title: Joi.string(),
     description: Joi.string(),
-    deadline: Joi.date().required().format('YYYY-MM-DD HH:mm'),
+    deadline: Joi.date().format('YYYY-MM-DD HH:mm'),
 })
 
 const cardGetAllSchema = Joi.object({
