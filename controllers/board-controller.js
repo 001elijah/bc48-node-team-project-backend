@@ -5,10 +5,7 @@ const shortid = require('shortid')
 const getBoardAll = async (req, res, next) => {
     const { _id: owner } = req.user
 
-    const boards = await Board.find({ owner }).populate(
-        'owner',
-        '-_id email'
-    )
+    const boards = await Board.find({ owner }).populate('owner', '-_id email')
 
     res.json(boards)
 }
@@ -25,10 +22,7 @@ const updateBoardById = async (req, res, next) => {
     const { _id: owner } = req.user
     const { boardId } = req.params
 
-    const updateBoard = await Board.updateOne(
-        { _id: boardId, owner },
-        req.body
-    )
+    const updateBoard = await Board.updateOne({ _id: boardId, owner }, req.body)
 
     if (updateBoard.modifiedCount === 0) {
         throw HttpError(404)

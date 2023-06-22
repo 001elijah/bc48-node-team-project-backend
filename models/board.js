@@ -10,7 +10,16 @@ const boardSchema = new Schema(
         },
         icon: {
             type: String,
-            enum: ['icon-project', 'icon-star', 'icon-loading', 'icon-puzzle-piece', 'icon-container', 'icon-lightning', 'icon-colors', 'icon-hexagon'],
+            enum: [
+                'icon-project',
+                'icon-star',
+                'icon-loading',
+                'icon-puzzle-piece',
+                'icon-container',
+                'icon-lightning',
+                'icon-colors',
+                'icon-hexagon',
+            ],
             default: 'icon-project',
         },
         background: {
@@ -66,4 +75,3 @@ module.exports = {
     Board,
     schemas,
 }
-

@@ -1,7 +1,6 @@
 const { Schema, model } = require('mongoose')
 const { handleMongooseError } = require('../helpers')
-const Joi = require('joi')
-    .extend(require('@joi/date'));
+const Joi = require('joi').extend(require('@joi/date'))
 
 const cardSchema = new Schema(
     {
@@ -65,7 +64,7 @@ const cardGetAllSchema = Joi.object({
 
 const cardUpdateColumnSchema = Joi.object({
     boardId: Joi.string().required(),
-    columnId: Joi.string().required()
+    columnId: Joi.string().required(),
 })
 
 const schemas = {
@@ -75,10 +74,9 @@ const schemas = {
     cardUpdateColumnSchema,
 }
 
-
 const Card = model('card', cardSchema)
 
 module.exports = {
     Card,
-    schemas
+    schemas,
 }

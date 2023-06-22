@@ -3,16 +3,16 @@ const { Card } = require('../models/card')
 const { Board } = require('../models/board')
 
 const addCard = async (req, res, next) => {
-    const { _id: owner } = req.user;
+    const { _id: owner } = req.user
     const { boardId, columnId } = req.body
-    
-    const board = await Board.findById(boardId);
-    
+
+    const board = await Board.findById(boardId)
+
     if (!board) {
-        throw HttpError(404, "Board not found");
+        throw HttpError(404, 'Board not found')
     }
 
-    const { columns } = board;
+    const { columns } = board
 
     const index = columns.findIndex((column) => column.id == columnId)
 
@@ -38,10 +38,7 @@ const updateCardById = async (req, res, next) => {
     const { _id: owner } = req.user
     const { cardId } = req.params
 
-    const updateCard = await Card.updateOne(
-        { _id: cardId, owner },
-        req.body
-    )
+    const updateCard = await Card.updateOne({ _id: cardId, owner }, req.body)
 
     if (updateCard.modifiedCount === 0) {
         throw HttpError(404)
@@ -66,39 +63,42 @@ const deleteCardById = async (req, res, next) => {
 }
 
 const updateCardColumn = async (req, res, next) => {
-    const { _id: owner } = req.user;
-    const { boardId, columnId} = req.body;
-    const { cardId } = req.params;
+    const { _id: owner } = req.user
+    const { boardId, columnId } = req.body
+    const { cardId } = req.params
 
-    const board = await Board.findById(boardId);
-    
+    const board = await Board.findById(boardId)
+
     if (!board) {
-        throw HttpError(404, "Board not found");
+        throw HttpError(404, 'Board not found')
     }
 
-    const { columns } = board;
+    const { columns } = board
 
     const index = columns.findIndex((column) => column.id == columnId)
 
     if (index === -1) {
         throw HttpError(404, `Column not found`)
     }
-    
-    const card = await Card.findById(cardId);
+
+    const card = await Card.findById(cardId)
 
     if (card.columnId === columnId) {
         throw HttpError(404, 'This column was used in this card')
     }
 
-    const updateCard = await Card.updateOne({ _id: cardId, owner }, { columnId: columnId });
+    const updateCard = await Card.updateOne(
+        { _id: cardId, owner },
+        { columnId: columnId }
+    )
 
     if (updateCard.modifiedCount === 0) {
         throw HttpError(404)
     }
 
-    const cardNow = await Card.findById(cardId);
-    
-    res.json(cardNow);
+    const cardNow = await Card.findById(cardId)
+
+    res.json(cardNow)
 }
 
 module.exports = {

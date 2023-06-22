@@ -10,5 +10,5 @@ module.exports = {
     authenticate,
     validate,
     uploadToCloudinary,
-    validateBodyBoard
+    validateBodyBoard,
 }
