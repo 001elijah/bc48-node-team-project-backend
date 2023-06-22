@@ -6,7 +6,6 @@ const validateBodyBoard = require('./validateBodyBoard')
 // const upload = require('./upload');
 const { detectScreenSize } = require('./detectScreenSIze')
 
-
 module.exports = {
     isValidId,
     authenticate,

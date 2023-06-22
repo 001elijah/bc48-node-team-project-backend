@@ -1,7 +1,7 @@
 const { HttpError, ctrlWrapper } = require('../helpers')
 const { Board } = require('../models/board')
 const shortid = require('shortid')
-const {getImages} = require('../middlewares')
+const { getImages } = require('../middlewares')
 
 const getBoardAll = async (req, res, next) => {
     const { _id: owner } = req.user
@@ -151,22 +151,22 @@ const deleteColumnById = async (req, res, next) => {
 }
 
 const getBackground = async (req, res) => {
-  const screenSize = req.screenSize; 
-  let folder;
-  if (screenSize === 'mobile') {
-    folder = 'background/mobile';
-  } else if (screenSize === 'tablet') {
-    folder = 'background/tablet';
-  } else {
-    folder = 'background/desktop';
-  }
-  try {
-    const images = await getImages(folder);
-    res.json(images);
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to retrieve images' });
-  }
-};
+    const screenSize = req.screenSize
+    let folder
+    if (screenSize === 'mobile') {
+        folder = 'background/mobile'
+    } else if (screenSize === 'tablet') {
+        folder = 'background/tablet'
+    } else {
+        folder = 'background/desktop'
+    }
+    try {
+        const images = await getImages(folder)
+        res.json(images)
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to retrieve images' })
+    }
+}
 
 module.exports = {
     getBoardAll: ctrlWrapper(getBoardAll),
@@ -177,4 +177,5 @@ module.exports = {
     deleteBoardById: ctrlWrapper(deleteBoardById),
     updateBoardById: ctrlWrapper(updateBoardById),
     deleteColumnById: ctrlWrapper(deleteColumnById),
+    getBackground: ctrlWrapper(getBackground),
 }

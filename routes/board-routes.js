@@ -6,7 +6,6 @@ const boardController = require('../controllers/board-controller')
 const { validateBodyBoard } = require('../middlewares')
 const { schemas } = require('../models/board')
 
-
 router.use(authenticate)
 
 router.get('/', boardController.getBoardAll)
@@ -50,6 +49,6 @@ router.delete(
     boardController.deleteColumnById
 )
 
-router.get('/backgrounds', detectScreenSize, boardController.getBackground);
+router.get('/backgrounds', detectScreenSize, boardController.getBackground)
 
 module.exports = router
