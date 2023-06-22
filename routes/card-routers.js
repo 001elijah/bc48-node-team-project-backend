@@ -30,6 +30,7 @@ router.patch(
 router.patch(
     '/column/:cardId',
     validateBodyBoard(schemas.cardUpdateColumnSchema),
+    isValidId,
     cardController.updateCardColumn
 )
 
