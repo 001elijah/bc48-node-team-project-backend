@@ -38,7 +38,20 @@ const uploadToCloudinary = (req, res, next) => {
         next()
     })
 }
+const getImages = async (folder) => {
+    try {
+        const result = await cloudinary.search
+            .expression(`public_id:${folder}/*`)
+            .execute()
+        const urls = result.resources.map((resource) => resource.url)
+        return urls
+    } catch (error) {
+        console.error('Error retrieving images:', error)
+        throw error
+    }
+}
 
 module.exports = {
     uploadToCloudinary,
+    getImages,
 }
