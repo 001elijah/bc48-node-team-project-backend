@@ -1,5 +1,7 @@
 const { Schema, model } = require('mongoose')
 const { handleMongooseError } = require('../helpers')
+const Joi = require('joi')
+    .extend(require('@joi/date'));
 
 const cardSchema = new Schema(
     {
@@ -17,7 +19,7 @@ const cardSchema = new Schema(
             default: 'without',
         },
         deadline: {
-            type: String,
+            type: Date,
             require: true,
         },
         owner: {
@@ -29,7 +31,7 @@ const cardSchema = new Schema(
             type: Schema.Types.ObjectId,
             required: true,
         },
-        columId: {
+        columnId: {
             type: String,
             required: true,
         },
@@ -42,6 +44,41 @@ const cardSchema = new Schema(
 
 cardSchema.post('save', handleMongooseError)
 
+const cardAddSchema = Joi.object({
+    title: Joi.string().required(),
+    description: Joi.string().required(),
+    deadline: Joi.date().required().format('YYYY-MM-DD HH:mm'),
+    boardId: Joi.string().required(),
+    columnId: Joi.string().required(),
+})
+
+const cardUpdateSchema = Joi.object({
+    title: Joi.string(),
+    description: Joi.string(),
+    deadline: Joi.date().required().format('YYYY-MM-DD HH:mm'),
+})
+
+const cardGetAllSchema = Joi.object({
+    boardId: Joi.string().required(),
+    columnId: Joi.string().required(),
+})
+
+const cardUpdateColumnSchema = Joi.object({
+    boardId: Joi.string().required(),
+    columnId: Joi.string().required()
+})
+
+const schemas = {
+    cardAddSchema,
+    cardGetAllSchema,
+    cardUpdateSchema,
+    cardUpdateColumnSchema,
+}
+
+
 const Card = model('card', cardSchema)
 
-module.exports = Card
+module.exports = {
+    Card,
+    schemas
+}
