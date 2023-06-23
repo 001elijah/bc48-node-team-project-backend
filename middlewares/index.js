@@ -1,10 +1,12 @@
 const authenticate = require('./authenticate')
 const validate = require('./validateUser')
-const { uploadToCloudinary, getImages } = require('./cloudinaryUpload')
+const {
+    uploadToCloudinary,
+    initializBackgrounds,
+} = require('./cloudinaryUpload')
 const isValidId = require('./isValidId')
 const validateBodyBoard = require('./validateBodyBoard')
 // const upload = require('./upload');
-const { detectScreenSize } = require('./detectScreenSize')
 
 module.exports = {
     isValidId,
@@ -12,6 +14,5 @@ module.exports = {
     validate,
     uploadToCloudinary,
     validateBodyBoard,
-    detectScreenSize,
-    getImages,
+    initializBackgrounds,
 }

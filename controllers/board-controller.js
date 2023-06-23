@@ -1,7 +1,8 @@
 const { HttpError, ctrlWrapper, arrangeBackgrounds } = require('../helpers')
 const { Board } = require('../models/board')
 const shortid = require('shortid')
-const { getImages } = require('../middlewares')
+const { initializBackgrounds } = require('../middlewares')
+const { Background } = require('../models/background')
 
 const getBoardAll = async (req, res) => {
     const { _id: owner } = req.user
@@ -150,17 +151,21 @@ const deleteColumnById = async (req, res) => {
     res.json({ message: 'Column daleted' })
 }
 
-const getBackground = async (_, res) => {
+const getBackgroundThumbnails = async (req, res) => {
     try {
-        const mobileBackgroundsList = await getImages('background/mobile')
-        const mobile = arrangeBackgrounds(mobileBackgroundsList, 'mobile')
-        const tabletBackgroundsList = await getImages('background/tablet')
-        const tablet = arrangeBackgrounds(tabletBackgroundsList, 'tablet')
-        const desktopBackgroundsList = await getImages('background/desktop')
-        const desktop = arrangeBackgrounds(desktopBackgroundsList, 'desktop')
-        res.json({ mobile, tablet, desktop })
+        let backgrounds = await Background.find()
+        if (backgrounds.length === 0) {
+            await initializBackgrounds()
+            backgrounds = await Background.find()
+        }
+
+        const thumbnails = backgrounds.map((i) => {
+            return { id: i._id, thumbnail: i.thumbnail }
+        })
+        res.json(thumbnails)
     } catch (error) {
-        res.status(500).json({ error: 'Failed to retrieve images' })
+        console.error(error)
+        res.status(500).json({ error: 'Internal Server Error' })
     }
 }
 
@@ -173,5 +178,5 @@ module.exports = {
     deleteBoardById: ctrlWrapper(deleteBoardById),
     updateBoardById: ctrlWrapper(updateBoardById),
     deleteColumnById: ctrlWrapper(deleteColumnById),
-    getBackground: ctrlWrapper(getBackground),
+    getBackgroundThumbnails: ctrlWrapper(getBackgroundThumbnails),
 }
