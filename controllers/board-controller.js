@@ -20,6 +20,19 @@ const addBoard = async (req, res) => {
     res.status(201).json(board)
 }
 
+const getBoardById = async (req, res) => {
+    const { _id: owner } = req.user;
+    const { boardId } = req.params;
+
+    const board = await Board.findOne({ _id: boardId, owner}).populate('owner', '-_id email');
+
+    if (!board) {
+      throw HttpError(404);
+    }
+
+    res.json(board)
+}
+
 const updateBoardById = async (req, res) => {
     const { _id: owner } = req.user
     const { boardId } = req.params
@@ -179,4 +192,5 @@ module.exports = {
     updateBoardById: ctrlWrapper(updateBoardById),
     deleteColumnById: ctrlWrapper(deleteColumnById),
     getBackgroundThumbnails: ctrlWrapper(getBackgroundThumbnails),
+    getBoardById: ctrlWrapper(getBoardById),
 }
