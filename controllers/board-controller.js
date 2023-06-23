@@ -2,7 +2,7 @@ const { HttpError, ctrlWrapper, arrangeBackgrounds } = require('../helpers')
 const { Board } = require('../models/board')
 const shortid = require('shortid')
 const { initializBackgrounds } = require('../middlewares')
-const {Background} = require('../models/background')
+const { Background } = require('../models/background')
 
 const getBoardAll = async (req, res) => {
     const { _id: owner } = req.user
@@ -153,19 +153,21 @@ const deleteColumnById = async (req, res) => {
 
 const getBackgroundThumbnails = async (req, res) => {
     try {
-        let backgrounds = await Background.find();
+        let backgrounds = await Background.find()
         if (backgrounds.length === 0) {
-            await initializBackgrounds();
-            backgrounds = await Background.find();
-        }  
-        
-        const thumbnails = backgrounds.map((i) => { return { id: i._id, url: i.thumbnail }; });
-        res.json(thumbnails);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-};
+            await initializBackgrounds()
+            backgrounds = await Background.find()
+        }
+
+        const thumbnails = backgrounds.map((i) => {
+            return { id: i._id, url: i.thumbnail }
+        })
+        res.json(thumbnails)
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({ error: 'Internal Server Error' })
+    }
+}
 
 module.exports = {
     getBoardAll: ctrlWrapper(getBoardAll),

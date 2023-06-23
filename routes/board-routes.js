@@ -49,6 +49,6 @@ router.delete(
     boardController.deleteColumnById
 )
 
-router.get('/thumbnails', boardController.getBackgroundThumbnails);
+router.get('/thumbnails', boardController.getBackgroundThumbnails)
 
 module.exports = router
