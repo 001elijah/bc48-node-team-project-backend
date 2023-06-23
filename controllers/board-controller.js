@@ -1,10 +1,10 @@
-const { HttpError, ctrlWrapper } = require('../helpers')
+const { HttpError, ctrlWrapper, arrangeBackgrounds } = require('../helpers')
 const { Board } = require('../models/board')
 const shortid = require('shortid')
 const { initializBackgrounds } = require('../middlewares')
 const {Background} = require('../models/background')
 
-const getBoardAll = async (req, res, next) => {
+const getBoardAll = async (req, res) => {
     const { _id: owner } = req.user
 
     const boards = await Board.find({ owner }).populate('owner', '-_id email')
@@ -12,7 +12,7 @@ const getBoardAll = async (req, res, next) => {
     res.json(boards)
 }
 
-const addBoard = async (req, res, next) => {
+const addBoard = async (req, res) => {
     const { _id: owner } = req.user
 
     const board = await Board.create({ ...req.body, owner })
@@ -20,7 +20,7 @@ const addBoard = async (req, res, next) => {
     res.status(201).json(board)
 }
 
-const updateBoardById = async (req, res, next) => {
+const updateBoardById = async (req, res) => {
     const { _id: owner } = req.user
     const { boardId } = req.params
 
@@ -35,7 +35,7 @@ const updateBoardById = async (req, res, next) => {
     res.json(board)
 }
 
-const deleteBoardById = async (req, res, next) => {
+const deleteBoardById = async (req, res) => {
     const { _id: owner } = req.user
     const { boardId } = req.params
 
@@ -48,7 +48,7 @@ const deleteBoardById = async (req, res, next) => {
     res.json({ message: 'board deleted' })
 }
 
-const addColumn = async (req, res, next) => {
+const addColumn = async (req, res) => {
     const { title, boardId } = req.body
     const { _id: owner } = req.user
 
@@ -69,7 +69,7 @@ const addColumn = async (req, res, next) => {
     res.status(201).json(newColumn)
 }
 
-const getColumn = async (req, res, next) => {
+const getColumn = async (req, res) => {
     const { boardId } = req.body
     const { _id: owner } = req.user
 
@@ -84,7 +84,7 @@ const getColumn = async (req, res, next) => {
     res.json(columns)
 }
 
-const updateColumn = async (req, res, next) => {
+const updateColumn = async (req, res) => {
     const { columnId } = req.params
     const { title, boardId } = req.body
     const { _id: owner } = req.user
@@ -117,7 +117,7 @@ const updateColumn = async (req, res, next) => {
     res.json(boardGetColumn.columns[index])
 }
 
-const deleteColumnById = async (req, res, next) => {
+const deleteColumnById = async (req, res) => {
     const { _id: owner } = req.user
     const { columnId } = req.params
     const { boardId } = req.body
@@ -135,7 +135,7 @@ const deleteColumnById = async (req, res, next) => {
     if (index === -1) {
         throw HttpError(
             400,
-            `${columId} is not valid id or this column not created`
+            `${columnId} is not valid id or this column not created`
         )
     }
 
