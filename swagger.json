@@ -1656,7 +1656,7 @@
             },
             "CardCreated":{
                 "type": "object",
-                "required": ["title", "description", "deadline", "boardId", "columnId"],
+                "required": ["title", "description", "deadline", "boardId", "columnId", "label"],
                 "properties": {
                     "title": {
                         "type": "string",
@@ -1665,6 +1665,10 @@
                     "description": {
                         "type": "string",
                         "example": "What we do"
+                    },
+                    "label":{
+                        "type": "string",
+                        "example": "without"
                     },
                     "deadline": {
                         "type": "date",
@@ -1694,6 +1698,10 @@
                     "description": {
                         "type": "string",
                         "example": "What we do"
+                    },
+                    "label":{
+                        "type": "string",
+                        "example": "without"
                     },
                     "deadline": {
                         "type": "date",
@@ -1747,6 +1755,10 @@
                     "description": {
                         "type": "string",
                         "example": "What we do"
+                    },
+                    "label":{
+                        "type": "string",
+                        "example": "without"
                     },
                     "deadline": {
                         "type": "date",
