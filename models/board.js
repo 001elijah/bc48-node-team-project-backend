@@ -45,12 +45,18 @@ boardSchema.post('save', handleMongooseError)
 
 const boardAddSchema = Joi.object({
     title: Joi.string().required(),
-    icon: Joi.string().required(),
+    icon: Joi.string().required()
+        .valid('icon-project','icon-star','icon-loading','icon-puzzle-piece','icon-container','icon-lightning','icon-colors','icon-hexagon',)
+        .default('icon-project'),
+    background: Joi.string().required(),
 })
 
 const boardUpdateSchema = Joi.object({
     title: Joi.string(),
-    icon: Joi.string(),
+    icon: Joi.string()
+        .valid('icon-project','icon-star','icon-loading','icon-puzzle-piece','icon-container','icon-lightning','icon-colors','icon-hexagon',)
+        .default('icon-project'),
+    background: Joi.string(),
 })
 
 const columnAddAndUpdateSchema = Joi.object({
