@@ -160,7 +160,7 @@ const getBackgroundThumbnails = async (req, res) => {
         }
 
         const thumbnails = backgrounds.map((i) => {
-            return { id: i._id, url: i.thumbnail }
+            return { id: i._id, thumbnail: i.thumbnail }
         })
         res.json(thumbnails)
     } catch (error) {
