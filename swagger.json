@@ -704,6 +704,61 @@
                         }
                     }
                 }
+            },
+            "get":{
+                "tags": ["board"],
+                "summary": "Get all information about board by id",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "columnId",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "security": [{ "Bearer": [] }],
+                "responses": {
+                    "200": {
+                        "description": "(OK) Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Board"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Not authorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User401noAuth"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "(Not Found)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Card404"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "(Server Error)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User500"
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
         "/board/column/":{
@@ -772,7 +827,7 @@
                 "security": [{ "Bearer": [] }],
                 "requestBody": {
                     "required": true,
-                    "description": "Gel all information about column",
+                    "description": "Get all information about column",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -1656,7 +1711,7 @@
             },
             "CardCreated":{
                 "type": "object",
-                "required": ["title", "description", "deadline", "boardId", "columnId"],
+                "required": ["title", "description", "deadline", "boardId", "columnId", "label"],
                 "properties": {
                     "title": {
                         "type": "string",
@@ -1665,6 +1720,10 @@
                     "description": {
                         "type": "string",
                         "example": "What we do"
+                    },
+                    "label":{
+                        "type": "string",
+                        "example": "without"
                     },
                     "deadline": {
                         "type": "date",
@@ -1694,6 +1753,10 @@
                     "description": {
                         "type": "string",
                         "example": "What we do"
+                    },
+                    "label":{
+                        "type": "string",
+                        "example": "without"
                     },
                     "deadline": {
                         "type": "date",
@@ -1747,6 +1810,10 @@
                     "description": {
                         "type": "string",
                         "example": "What we do"
+                    },
+                    "label":{
+                        "type": "string",
+                        "example": "without"
                     },
                     "deadline": {
                         "type": "date",
