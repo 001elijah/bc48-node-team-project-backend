@@ -52,5 +52,4 @@ router.delete(
     boardController.deleteColumnById
 )
 
-
 module.exports = router

@@ -21,13 +21,16 @@ const addBoard = async (req, res) => {
 }
 
 const getBoardById = async (req, res) => {
-    const { _id: owner } = req.user;
-    const { boardId } = req.params;
+    const { _id: owner } = req.user
+    const { boardId } = req.params
 
-    const board = await Board.findOne({ _id: boardId, owner}).populate('owner', '-_id email');
+    const board = await Board.findOne({ _id: boardId, owner }).populate(
+        'owner',
+        '-_id email'
+    )
 
     if (!board) {
-      throw HttpError(404);
+        throw HttpError(404)
     }
 
     res.json(board)
