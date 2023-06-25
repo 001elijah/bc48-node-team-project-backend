@@ -493,7 +493,7 @@
                             }
                         }
                     },
-                    "400":{
+                    "400": {
                         "description": "Missing field",
                         "content": {
                             "application/json": {
@@ -525,7 +525,7 @@
                     }
                 }
             },
-            "get":{
+            "get": {
                 "tags": ["board"],
                 "summary": "Get all information about boards",
                 "security": [{ "Bearer": [] }],
@@ -563,7 +563,7 @@
                 }
             }
         },
-        "/board/:boardId":{
+        "/board/:boardId": {
             "patch": {
                 "tags": ["board"],
                 "summary": "Update board",
@@ -640,7 +640,7 @@
                     }
                 }
             },
-            "delete":{
+            "delete": {
                 "tags": ["board"],
                 "summary": "Delete board",
                 "parameters": [
@@ -705,7 +705,7 @@
                     }
                 }
             },
-            "get":{
+            "get": {
                 "tags": ["board"],
                 "summary": "Get all information about board by id",
                 "parameters": [
@@ -761,7 +761,7 @@
                 }
             }
         },
-        "/board/column/":{
+        "/board/column/": {
             "post": {
                 "tags": ["board"],
                 "summary": "Created new column",
@@ -788,7 +788,7 @@
                             }
                         }
                     },
-                    "400":{
+                    "400": {
                         "description": "Missing field",
                         "content": {
                             "application/json": {
@@ -819,7 +819,6 @@
                         }
                     }
                 }
-                
             },
             "get": {
                 "tags": ["board"],
@@ -847,7 +846,7 @@
                             }
                         }
                     },
-                    "400":{
+                    "400": {
                         "description": "Missing field",
                         "content": {
                             "application/json": {
@@ -880,8 +879,8 @@
                 }
             }
         },
-        "/board/column/:columnId":{
-            "patch":{
+        "/board/column/:columnId": {
+            "patch": {
                 "tags": ["board"],
                 "summary": "Update column",
                 "parameters": [
@@ -915,7 +914,7 @@
                             }
                         }
                     },
-                    "400":{
+                    "400": {
                         "description": "Missing field",
                         "content": {
                             "application/json": {
@@ -947,7 +946,7 @@
                     }
                 }
             },
-            "delete":{
+            "delete": {
                 "tags": ["board"],
                 "summary": "Delete column",
                 "parameters": [
@@ -981,7 +980,7 @@
                             }
                         }
                     },
-                    "400":{
+                    "400": {
                         "description": "Missing field",
                         "content": {
                             "application/json": {
@@ -1014,15 +1013,15 @@
                 }
             }
         },
-        "/board/backgrounds":{
-            "get":{
+        "/board/backgrounds": {
+            "get": {
                 "tags": ["board"],
                 "summary": "Get all backgrounds url",
                 "security": [{ "Bearer": [] }]
             }
         },
-        "/card/":{
-            "post":{
+        "/card/": {
+            "post": {
                 "tags": ["card"],
                 "summary": "Created new card",
                 "security": [{ "Bearer": [] }],
@@ -1048,7 +1047,7 @@
                             }
                         }
                     },
-                    "400":{
+                    "400": {
                         "description": "Missing field",
                         "content": {
                             "application/json": {
@@ -1090,7 +1089,7 @@
                     }
                 }
             },
-            "get":{
+            "get": {
                 "tags": ["card"],
                 "summary": "Get all information about cards by column",
                 "security": [{ "Bearer": [] }],
@@ -1116,7 +1115,7 @@
                             }
                         }
                     },
-                    "400":{
+                    "400": {
                         "description": "Missing field",
                         "content": {
                             "application/json": {
@@ -1149,8 +1148,8 @@
                 }
             }
         },
-        "/card/:cardId":{
-            "patch":{
+        "/card/:cardId": {
+            "patch": {
                 "tags": ["card"],
                 "summary": "Update card",
                 "parameters": [
@@ -1184,7 +1183,7 @@
                             }
                         }
                     },
-                    "400":{
+                    "400": {
                         "description": "Missing field",
                         "content": {
                             "application/json": {
@@ -1226,7 +1225,7 @@
                     }
                 }
             },
-            "delete":{
+            "delete": {
                 "tags": ["card"],
                 "summary": "Delete card",
                 "parameters": [
@@ -1282,8 +1281,8 @@
                 }
             }
         },
-        "/card/column/:columnId":{
-            "patch":{
+        "/card/column/:columnId": {
+            "patch": {
                 "tags": ["card"],
                 "summary": "Update curent column in card",
                 "parameters": [
@@ -1317,7 +1316,7 @@
                             }
                         }
                     },
-                    "400":{
+                    "400": {
                         "description": "Missing field",
                         "content": {
                             "application/json": {
@@ -1593,7 +1592,7 @@
                     }
                 }
             },
-            "Board":{
+            "Board": {
                 "type": "object",
                 "properties": {
                     "tite": {
@@ -1604,11 +1603,11 @@
                         "type": "string",
                         "example": "icon-project"
                     },
-                    "background":{
+                    "background": {
                         "type": "string",
                         "example": "backgroundTest.com"
                     },
-                    "columns":{
+                    "columns": {
                         "type": "array",
                         "example": ["clumn1", "column2", "column3"]
                     },
@@ -1618,7 +1617,7 @@
                     }
                 }
             },
-            "BoarCreated":{
+            "BoarCreated": {
                 "type": "object",
                 "required": ["tite", "icon", "background"],
                 "properties": {
@@ -1630,7 +1629,7 @@
                         "type": "string",
                         "example": "icon-project"
                     },
-                    "background":{
+                    "background": {
                         "type": "string",
                         "example": "backgroundTest.com"
                     }
@@ -1645,7 +1644,7 @@
                     }
                 }
             },
-            "BoardId400":{
+            "BoardId400": {
                 "type": "object",
                 "properties": {
                     "message": {
@@ -1654,7 +1653,7 @@
                     }
                 }
             },
-            "BoardDelete":{
+            "BoardDelete": {
                 "type": "object",
                 "properties": {
                     "message": {
@@ -1663,7 +1662,7 @@
                     }
                 }
             },
-            "ColumnCreated":{
+            "ColumnCreated": {
                 "type": "object",
                 "required": ["boardId", "title"],
                 "properties": {
@@ -1677,7 +1676,7 @@
                     }
                 }
             },
-            "Column":{
+            "Column": {
                 "type": "object",
                 "properties": {
                     "id": {
@@ -1690,7 +1689,7 @@
                     }
                 }
             },
-            "ColumnUpdateBody":{
+            "ColumnUpdateBody": {
                 "type": "object",
                 "required": ["boardId"],
                 "properties": {
@@ -1700,7 +1699,7 @@
                     }
                 }
             },
-            "ColumnDelete":{
+            "ColumnDelete": {
                 "type": "object",
                 "properties": {
                     "message": {
@@ -1709,9 +1708,16 @@
                     }
                 }
             },
-            "CardCreated":{
+            "CardCreated": {
                 "type": "object",
-                "required": ["title", "description", "deadline", "boardId", "columnId", "label"],
+                "required": [
+                    "title",
+                    "description",
+                    "deadline",
+                    "boardId",
+                    "columnId",
+                    "label"
+                ],
                 "properties": {
                     "title": {
                         "type": "string",
@@ -1721,7 +1727,7 @@
                         "type": "string",
                         "example": "What we do"
                     },
-                    "label":{
+                    "label": {
                         "type": "string",
                         "example": "without"
                     },
@@ -1739,10 +1745,10 @@
                     }
                 }
             },
-            "Card":{
+            "Card": {
                 "type": "object",
                 "properties": {
-                    "_id":{
+                    "_id": {
                         "type": "string",
                         "example": "111111111111125bcd45d55"
                     },
@@ -1754,7 +1760,7 @@
                         "type": "string",
                         "example": "What we do"
                     },
-                    "label":{
+                    "label": {
                         "type": "string",
                         "example": "without"
                     },
@@ -1776,7 +1782,7 @@
                     }
                 }
             },
-            "Card404":{
+            "Card404": {
                 "type": "object",
                 "properties": {
                     "message": {
@@ -1785,7 +1791,7 @@
                     }
                 }
             },
-            "CardGet":{
+            "CardGet": {
                 "type": "object",
                 "required": ["boardId", "columnId"],
                 "properties": {
@@ -1799,9 +1805,9 @@
                     }
                 }
             },
-            "CardUpdate":{
+            "CardUpdate": {
                 "type": "object",
-                "required": [ "boardId", "columnId"],
+                "required": ["boardId", "columnId"],
                 "properties": {
                     "title": {
                         "type": "string",
@@ -1811,7 +1817,7 @@
                         "type": "string",
                         "example": "What we do"
                     },
-                    "label":{
+                    "label": {
                         "type": "string",
                         "example": "without"
                     },
@@ -1829,7 +1835,7 @@
                     }
                 }
             },
-            "Card404Id":{
+            "Card404Id": {
                 "type": "object",
                 "properties": {
                     "message": {
@@ -1838,7 +1844,7 @@
                     }
                 }
             },
-            "CardDelete":{
+            "CardDelete": {
                 "type": "object",
                 "properties": {
                     "message": {
