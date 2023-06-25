@@ -10,6 +10,8 @@ router.use(authenticate)
 
 router.get('/', boardController.getBoardAll)
 
+router.get('/:boardId', isValidId, boardController.getBoardById)
+
 router.post(
     '/',
     validateBodyBoard(schemas.boardAddSchema),
