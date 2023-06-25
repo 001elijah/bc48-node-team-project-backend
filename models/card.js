@@ -49,7 +49,7 @@ const cardAddSchema = Joi.object({
     label: Joi.string()
         .valid('without', 'low', 'medium', 'high')
         .default('without'),
-    deadline: Joi.date().required().format('YYYY-MM-DD HH:mm'),
+    deadline: Joi.date().required().format('DD/MM/YYYYZ'),
     boardId: Joi.string().required(),
     columnId: Joi.string().required(),
 })
@@ -60,7 +60,7 @@ const cardUpdateSchema = Joi.object({
     label: Joi.string()
         .valid('without', 'low', 'medium', 'high')
         .default('without'),
-    deadline: Joi.date().format('YYYY-MM-DD HH:mm'),
+    deadline: Joi.date().format('DD/MM/YYYYZ'),
 })
 
 const cardGetAllSchema = Joi.object({
