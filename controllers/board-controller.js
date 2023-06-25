@@ -1,4 +1,4 @@
-const { HttpError, ctrlWrapper, arrangeBackgrounds } = require('../helpers')
+const { HttpError, ctrlWrapper } = require('../helpers')
 const { Board } = require('../models/board')
 const shortid = require('shortid')
 const { initializBackgrounds } = require('../middlewares')
