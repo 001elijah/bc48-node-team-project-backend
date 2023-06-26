@@ -20,6 +20,14 @@ app.use(express.urlencoded({ extended: false }))
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
+// app.use((req, res, next) => {
+//   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3001');
+//   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+//   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+//   res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+//   next();
+// });
+
 app.use('/user', authRouter)
 app.use('/board', boardRouter)
 app.use('/card', cardRouter)
