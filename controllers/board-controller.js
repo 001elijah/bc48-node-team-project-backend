@@ -29,6 +29,7 @@ const getBoardById = async (req, res) => {
         '-_id email'
     )
 
+    
     if (!board) {
         throw HttpError(404)
     }
