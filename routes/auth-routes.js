@@ -10,6 +10,7 @@ router.post(
     validate.validateUser(schemas.userRegisterSchema),
     authControllers.register
 )
+router.post('/auth/google', authControllers.authWithGoogle)
 
 router.post(
     '/login',

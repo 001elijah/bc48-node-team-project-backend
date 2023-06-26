@@ -1,5 +1,7 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const shortid = require('shortid')
+const { OAuth2Client } = require('google-auth-library')
 const { User } = require('../models/user')
 const sgMail = require('@sendgrid/mail')
 const { HttpError, ctrlWrapper } = require('../helpers')
@@ -168,6 +170,73 @@ const sendEmail = async (req, res) => {
     })
 }
 
+const authWithGoogle = async (req, res) => {
+    const { credential, googleClientId } = req.body
+    const { idToken } = credential
+
+    // Verify the Google ID token
+    const client = new OAuth2Client(googleClientId)
+    let payload
+    try {
+        const ticket = await client.verifyIdToken({
+            idToken,
+            audience: googleClientId,
+        })
+        payload = ticket.getPayload()
+    } catch (error) {
+        return res.status(401).json({ error: 'Invalid Google ID token' })
+    }
+
+    const { email } = payload
+    const user = await User.findOne({ email })
+
+    if (!user) {
+        // Create a new user with Google authentication
+        const newUser = {
+            email,
+            password: shortid(),
+            userName: payload.given_name,
+            avatarUrl: payload.picture,
+        }
+
+        const createdUser = await User.create(newUser)
+        const createdUserId = createdUser._id
+        const token = jwt.sign({ id: createdUserId }, SECRET_KEY, {
+            expiresIn: '7h',
+        })
+        await User.findByIdAndUpdate(createdUserId, { token })
+
+        res.status(201).json({
+            token,
+            user: {
+                userName: createdUser.userName,
+                email: createdUser.email,
+                theme: createdUser.theme,
+                avatarUrl: createdUser.avatarUrl,
+            },
+        })
+    }
+
+    if (user) {
+        const payload = {
+            id: user._id,
+        }
+
+        const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '7h' })
+        await User.findByIdAndUpdate(user._id, { token })
+
+        res.status(201).json({
+            token,
+            user: {
+                userName: user.userName,
+                email: user.email,
+                theme: user.theme,
+                avatarUrl: user.avatarUrl,
+            },
+        })
+    }
+}
+
 module.exports = {
     register: ctrlWrapper(register),
     login: ctrlWrapper(login),
@@ -176,4 +245,5 @@ module.exports = {
     updateUserTheme: ctrlWrapper(updateUserTheme),
     updateUser: ctrlWrapper(updateUser),
     sendEmail: ctrlWrapper(sendEmail),
+    authWithGoogle: ctrlWrapper(authWithGoogle),
 }
