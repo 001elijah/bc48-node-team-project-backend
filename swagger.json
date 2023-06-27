@@ -1595,7 +1595,7 @@
             "Board": {
                 "type": "object",
                 "properties": {
-                    "tite": {
+                    "title": {
                         "type": "string",
                         "example": "Test board"
                     },
@@ -1621,7 +1621,7 @@
                 "type": "object",
                 "required": ["tite", "icon", "background"],
                 "properties": {
-                    "tite": {
+                    "title": {
                         "type": "string",
                         "example": "Test board"
                     },
@@ -1733,7 +1733,7 @@
                     },
                     "deadline": {
                         "type": "date",
-                        "example": "11/11/2023"
+                        "example": "2023-06-27T12:51:38.035Z"
                     },
                     "boardId": {
                         "type": "string",
@@ -1766,7 +1766,7 @@
                     },
                     "deadline": {
                         "type": "date",
-                        "example": "11/11/2023"
+                        "example": "2023-06-27T12:51:38.035Z"
                     },
                     "boardId": {
                         "type": "string",
@@ -1823,7 +1823,7 @@
                     },
                     "deadline": {
                         "type": "date",
-                        "example": "11/11/2023"
+                        "example": "2023-06-27T12:51:38.035Z"
                     },
                     "boardId": {
                         "type": "string",
