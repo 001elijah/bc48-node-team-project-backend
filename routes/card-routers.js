@@ -16,8 +16,7 @@ router.post(
 
 router.get(
     '/',
-    validateBodyBoard(schemas.cardGetAllSchema),
-    cardController.getCardsByColumn
+    cardController.getAllCards
 )
 
 router.patch(

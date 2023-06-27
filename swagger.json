@@ -1091,19 +1091,8 @@
             },
             "get": {
                 "tags": ["card"],
-                "summary": "Get all information about cards by column",
+                "summary": "Get all information about cards",
                 "security": [{ "Bearer": [] }],
-                "requestBody": {
-                    "required": true,
-                    "description": "Get all cards by column",
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/CardGet"
-                            }
-                        }
-                    }
-                },
                 "responses": {
                     "200": {
                         "description": "(OK) Successful operation",
@@ -1111,16 +1100,6 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/Card"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Missing field",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Board400"
                                 }
                             }
                         }

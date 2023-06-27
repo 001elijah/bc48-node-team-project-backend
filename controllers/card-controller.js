@@ -25,11 +25,10 @@ const addCard = async (req, res, next) => {
     res.status(201).json(card)
 }
 
-const getCardsByColumn = async (req, res, next) => {
+const getAllCards = async (req, res, next) => {
     const { _id: owner } = req.user
-    const { boardId, columnId } = req.body
 
-    const cards = await Card.find({ boardId, columnId, owner })
+    const cards = await Card.find({ owner })
 
     res.json(cards)
 }
@@ -103,7 +102,7 @@ const updateCardColumn = async (req, res, next) => {
 
 module.exports = {
     addCard: ctrlWrapper(addCard),
-    getCardsByColumn: ctrlWrapper(getCardsByColumn),
+    getAllCards: ctrlWrapper(getAllCards),
     updateCardById: ctrlWrapper(updateCardById),
     deleteCardById: ctrlWrapper(deleteCardById),
     updateCardColumn: ctrlWrapper(updateCardColumn),
