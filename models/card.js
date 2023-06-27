@@ -63,11 +63,6 @@ const cardUpdateSchema = Joi.object({
     deadline: Joi.date().format('YYYY-MM-DDTHH:mm:ss.SSSZ'),
 })
 
-const cardGetAllSchema = Joi.object({
-    boardId: Joi.string().required(),
-    columnId: Joi.string().required(),
-})
-
 const cardUpdateColumnSchema = Joi.object({
     boardId: Joi.string().required(),
     columnId: Joi.string().required(),
@@ -75,7 +70,6 @@ const cardUpdateColumnSchema = Joi.object({
 
 const schemas = {
     cardAddSchema,
-    cardGetAllSchema,
     cardUpdateSchema,
     cardUpdateColumnSchema,
 }

@@ -14,11 +14,7 @@ router.post(
     cardController.addCard
 )
 
-router.get(
-    '/',
-    validateBodyBoard(schemas.cardGetAllSchema),
-    cardController.getCardsByColumn
-)
+router.get('/', cardController.getAllCards)
 
 router.patch(
     '/:cardId',
