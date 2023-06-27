@@ -1595,7 +1595,7 @@
             "Board": {
                 "type": "object",
                 "properties": {
-                    "tite": {
+                    "title": {
                         "type": "string",
                         "example": "Test board"
                     },
@@ -1621,7 +1621,7 @@
                 "type": "object",
                 "required": ["tite", "icon", "background"],
                 "properties": {
-                    "tite": {
+                    "title": {
                         "type": "string",
                         "example": "Test board"
                     },
