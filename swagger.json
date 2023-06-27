@@ -1733,7 +1733,7 @@
                     },
                     "deadline": {
                         "type": "date",
-                        "example": "11/11/2023"
+                        "example": "2023-06-27T12:51:38.035Z"
                     },
                     "boardId": {
                         "type": "string",
@@ -1766,7 +1766,7 @@
                     },
                     "deadline": {
                         "type": "date",
-                        "example": "11/11/2023"
+                        "example": "2023-06-27T12:51:38.035Z"
                     },
                     "boardId": {
                         "type": "string",
@@ -1823,7 +1823,7 @@
                     },
                     "deadline": {
                         "type": "date",
-                        "example": "11/11/2023"
+                        "example": "2023-06-27T12:51:38.035Z"
                     },
                     "boardId": {
                         "type": "string",
