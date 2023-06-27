@@ -14,10 +14,7 @@ router.post(
     cardController.addCard
 )
 
-router.get(
-    '/',
-    cardController.getAllCards
-)
+router.get('/', cardController.getAllCards)
 
 router.patch(
     '/:cardId',
