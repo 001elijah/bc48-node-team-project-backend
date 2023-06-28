@@ -6,7 +6,6 @@ const {
 } = require('./cloudinaryUpload')
 const isValidId = require('./isValidId')
 const validateBodyBoard = require('./validateBodyBoard')
-// const upload = require('./upload');
 
 module.exports = {
     isValidId,

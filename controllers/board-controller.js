@@ -1,6 +1,6 @@
+const shortid = require('shortid')
 const { HttpError, ctrlWrapper } = require('../helpers')
 const { Board } = require('../models/board')
-const shortid = require('shortid')
 const { initializBackgrounds } = require('../middlewares')
 const { Background } = require('../models/background')
 
@@ -24,10 +24,12 @@ const getBoardById = async (req, res) => {
     const { _id: owner } = req.user
     const { boardId } = req.params
 
-    const board = await Board.findOne({ _id: boardId, owner }).populate(
-        'owner',
-        '-_id email'
-    )
+    const board = await Board.findOne({ _id: boardId, owner })
+        .populate('owner', '-_id email')
+        .populate(
+            'background',
+            '-_id mobileUrl_1x mobileUrl_2x tabletUrl_1x tabletUrl_2x desktopUrl_1x desktopUrl_2x'
+        )
 
     if (!board) {
         throw HttpError(404)

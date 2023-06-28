@@ -23,7 +23,8 @@ const boardSchema = new Schema(
             default: 'icon-project',
         },
         background: {
-            type: String,
+            type: Schema.Types.ObjectId,
+            ref: 'background',
             default: null,
         },
         columns: {

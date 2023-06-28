@@ -1,15 +1,16 @@
 const express = require('express')
+const router = express.Router()
+
 const authControllers = require('../controllers/auth-controller')
 const { schemas } = require('../models/user')
 const { authenticate, validate, uploadToCloudinary } = require('../middlewares')
-
-const router = express.Router()
 
 router.post(
     '/register',
     validate.validateUser(schemas.userRegisterSchema),
     authControllers.register
 )
+
 router.post('/auth/google', authControllers.authWithGoogle)
 
 router.post(
