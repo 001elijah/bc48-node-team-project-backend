@@ -1,9 +1,9 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const shortid = require('shortid')
+const sgMail = require('@sendgrid/mail')
 const { OAuth2Client } = require('google-auth-library')
 const { User } = require('../models/user')
-const sgMail = require('@sendgrid/mail')
 const { HttpError, ctrlWrapper } = require('../helpers')
 const { SECRET_KEY, SENDGRID_API_KEY, SENDGRID_FROM, SENDGRID_TO } = process.env
 

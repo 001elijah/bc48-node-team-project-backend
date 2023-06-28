@@ -7,6 +7,7 @@ const { validateBodyBoard } = require('../middlewares')
 const { schemas } = require('../models/board')
 
 router.use(authenticate)
+
 router.get('/thumbnails', boardController.getBackgroundThumbnails)
 
 router.get('/', boardController.getBoardAll)
