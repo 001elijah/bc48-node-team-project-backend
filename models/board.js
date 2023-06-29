@@ -26,6 +26,12 @@ const boardSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: 'background',
             default: null,
+            set: function(value) {
+                if (value === 'dark') {
+                return null;
+                }
+                return value;
+            },
         },
         columns: {
             type: Array,
