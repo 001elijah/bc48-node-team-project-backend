@@ -27,7 +27,7 @@ const boardSchema = new Schema(
             ref: 'background',
             default: null,
             set: function(value) {
-                if (value == null || value == 'default') {
+                if (value === null || value === 'default') {
                 return null;
                 }
                 return value
