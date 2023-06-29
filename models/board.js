@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose')
+const { Schema, model, mongoose } = require('mongoose')
 const { handleMongooseError } = require('../helpers')
 const Joi = require('joi')
 
@@ -27,10 +27,10 @@ const boardSchema = new Schema(
             ref: 'background',
             default: null,
             set: function(value) {
-                if (value === 'dark') {
+                if (value == null) {
                 return null;
                 }
-                return value;
+                return new mongoose.Types.ObjectId(value)
             },
         },
         columns: {
@@ -82,7 +82,7 @@ const boardUpdateSchema = Joi.object({
             'icon-hexagon'
         )
         .default('icon-project'),
-    background: Joi.string(),
+    background: Joi.string().allow(null),
 })
 
 const columnAddAndUpdateSchema = Joi.object({
