@@ -27,10 +27,10 @@ const boardSchema = new Schema(
             ref: 'background',
             default: null,
             set: function(value) {
-                if (value == null) {
+                if (value == null || value == 'default') {
                 return null;
                 }
-                return new mongoose.Types.ObjectId(value)
+                return value
             },
         },
         columns: {
