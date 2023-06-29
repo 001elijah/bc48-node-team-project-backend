@@ -2,7 +2,7 @@ const { HttpError, ctrlWrapper } = require('../helpers')
 const { Card } = require('../models/card')
 const { Board } = require('../models/board')
 
-const addCard = async (req, res, next) => {
+const addCard = async (req, res) => {
     const { _id: owner } = req.user
     const { boardId, columnId } = req.body
 
@@ -25,7 +25,7 @@ const addCard = async (req, res, next) => {
     res.status(201).json(card)
 }
 
-const getAllCards = async (req, res, next) => {
+const getAllCards = async (req, res) => {
     const { _id: owner } = req.user
 
     const cards = await Card.find({ owner })
@@ -33,7 +33,7 @@ const getAllCards = async (req, res, next) => {
     res.json(cards)
 }
 
-const updateCardById = async (req, res, next) => {
+const updateCardById = async (req, res) => {
     const { _id: owner } = req.user
     const { cardId } = req.params
 
@@ -48,7 +48,7 @@ const updateCardById = async (req, res, next) => {
     res.json(card)
 }
 
-const deleteCardById = async (req, res, next) => {
+const deleteCardById = async (req, res) => {
     const { _id: owner } = req.user
     const { cardId } = req.params
 
@@ -61,7 +61,7 @@ const deleteCardById = async (req, res, next) => {
     res.json({ message: 'card deleted' })
 }
 
-const updateCardColumn = async (req, res, next) => {
+const updateCardColumn = async (req, res) => {
     const { _id: owner } = req.user
     const { boardId, columnId } = req.body
     const { cardId } = req.params

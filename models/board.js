@@ -1,4 +1,4 @@
-const { Schema, model, mongoose } = require('mongoose')
+const { Schema, model } = require('mongoose')
 const { handleMongooseError } = require('../helpers')
 const Joi = require('joi')
 
@@ -26,9 +26,9 @@ const boardSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: 'background',
             default: null,
-            set: function(value) {
+            set: function (value) {
                 if (value === null || value === 'default') {
-                return null;
+                    return null
                 }
                 return value
             },
