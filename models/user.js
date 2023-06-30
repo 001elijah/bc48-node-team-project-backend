@@ -41,7 +41,9 @@ userSchema.post('save', handleMongooseError)
 
 const userRegisterSchema = Joi.object({
     userName: Joi.string()
-        .regex(/^[a-zA-Z0-9!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]{2,32}$/)
+        .regex(/^[a-zA-Z0-9]+([-_ ][a-zA-Z0-9]+)*$/)
+        .min(2)
+        .max(32)
         .required(),
     email: Joi.string().min(8).max(64).pattern(emailPattern).required(),
     password: Joi.string().min(8).pattern(/^\S+$/).required(),
@@ -59,9 +61,10 @@ const updateTheme = Joi.object({
 })
 
 const updateUser = Joi.object({
-    userName: Joi.string().regex(
-        /^[a-zA-Z0-9!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]{2,32}$/
-    ),
+    userName: Joi.string()
+        .regex(/^[a-zA-Z0-9]+([-_ ][a-zA-Z0-9]+)*$/)
+        .min(2)
+        .max(32),
     email: Joi.string().min(8).max(64).pattern(emailPattern),
     password: Joi.string().min(8).pattern(/^\S+$/),
 })
