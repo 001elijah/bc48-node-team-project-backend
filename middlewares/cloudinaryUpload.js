@@ -29,6 +29,9 @@ const uploadToCloudinary = (req, res, next) => {
         if (error) {
             next(HttpError(400, 'Failed to upload file to Cloudinary'))
         }
+        if (!req.file) {
+            res.locals.avatarUrl = null
+        }
 
         if (req.file) {
             const file = req.file

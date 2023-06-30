@@ -123,7 +123,13 @@ const updateUser = async (req, res, next) => {
             }
         }
     }
-    let cloudinaryUrl = res.locals.avatarUrl ?? user.avatarUrl
+    let cloudinaryUrl
+    if (res.locals.avatarUrl) {
+        cloudinaryUrl = res.locals.avatarUrl
+    } else {
+        user = await User.findById(id)
+        cloudinaryUrl = user.avatarUrl
+    }
 
     user = await User.findById(id)
 
